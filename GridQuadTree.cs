@@ -408,8 +408,8 @@ namespace RonTang
 		{
 			itemRect = Rect.zero;
 			itemRect.size = size;
-            itemRect.center = position;
-            HoldObject = obj;
+            		itemRect.center = position;
+           		 HoldObject = obj;
 			
 		}
 
