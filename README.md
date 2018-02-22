@@ -3,6 +3,7 @@
   And this project is intended to show how to build a grid-based loose quadtree.
   
   You can learn the knowledge of quadtree or octree from follow web sites:
+  
   https://www.mathematik.tu-clausthal.de/fileadmin/AG-StochastischeOptimierung/papers/LooseOctreePaper.pdf
   
   https://anteru.net/blog/2008/11/14/315/index.html
