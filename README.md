@@ -1,6 +1,7 @@
 # GridLooseQuadtree
   This project is part of my blog.
-  And this project is intended to show how to build a grid-based loose quadtree.
+  And this project is just intended to show how to build a grid-based loose quadtree in Unity.
+  The code isn't optimal and maybe has some bug,you could modify or debug yourself.
   
   You can learn the knowledge of quadtree or octree from follow web sites:
   
@@ -12,9 +13,12 @@
   
   https://gamedevelopment.tutsplus.com/tutorials/quick-tip-use-quadtrees-to-detect-likely-collisions-in-2d-space--gamedev-374
   
-  http://altdevblog.com/2011/08/01/loose-octrees-for-frustum-culling-part-1/
+  http://www.tulrich.com/geekstuff/partitioning.html
   
-  这个项目是我博文的演示代码，它详细展示如何实现基于网格的四叉树。
+  http://cloudgrassland.com/2015/12/162-2/
+  
+  
+  这个项目是我博文的演示代码，它详细展示如何实现基于网格的四叉树。代码并非最佳，可能还有一些bug，你可自行修改。
   你可以从如下网址学习四叉树~~
   https://www.mathematik.tu-clausthal.de/fileadmin/AG-StochastischeOptimierung/papers/LooseOctreePaper.pdf
   
@@ -24,5 +28,8 @@
   
   https://gamedevelopment.tutsplus.com/tutorials/quick-tip-use-quadtrees-to-detect-likely-collisions-in-2d-space--gamedev-374
   
-  http://altdevblog.com/2011/08/01/loose-octrees-for-frustum-culling-part-1/
+  http://www.tulrich.com/geekstuff/partitioning.html
+  
+  http://cloudgrassland.com/2015/12/162-2/
+  
   
