@@ -27,38 +27,38 @@ namespace RonTang
         private GridQuadTreeNode<T>[][] nodes;
 
         public GridQuadTree(Vector2 worldCenter, float worldLengthVal, float objMinLengthVal)
-		{
+	{
             worldRect = CreateRect(worldCenter, new Vector2(worldLengthVal, worldLengthVal));
-			objMinLength = objMinLengthVal;
-			worldLength = worldLengthVal;
-			Init ();
-		}
+	    objMinLength = objMinLengthVal;
+	    worldLength = worldLengthVal;
+	    Init ();
+	}
 
-        public GridQuadTree(Rect worldRectVal,float objMinLengthVal)
-        {
+    public GridQuadTree(Rect worldRectVal,float objMinLengthVal)
+    {
 			
-			float maxSide = worldRectVal.width >= worldRectVal.height ? worldRectVal.width: worldRectVal.height;
-            worldRect = CreateRect(worldRectVal.center, new Vector2(maxSide, maxSide));
-            objMinLength = objMinLengthVal;
-			worldLength = maxSide;
-			Init ();
+	    float maxSide = worldRectVal.width >= worldRectVal.height ? worldRectVal.width: worldRectVal.height;
+        worldRect = CreateRect(worldRectVal.center, new Vector2(maxSide, maxSide));
+        objMinLength = objMinLengthVal;
+	    worldLength = maxSide;
+	    Init ();
 
-        }
+    }
 
-		public void GetItems(Rect resultRect, ref List<GridQuadTreeItem<T>> itemsList)
-		{
+	public void GetItems(Rect resultRect, ref List<GridQuadTreeItem<T>> itemsList)
+	{
 			if ( itemsList!= null)
 			{
 				GetItems(rootNode, resultRect, ref itemsList);
 			}
-		}
+	}
 
-		private void GetItems(GridQuadTreeNode<T> parentNode, Rect resultRect, ref List<GridQuadTreeItem<T>> itemsList)
-		{
-			parentNode.GetItems (resultRect, ref itemsList);
+	private void GetItems(GridQuadTreeNode<T> parentNode, Rect resultRect, ref List<GridQuadTreeItem<T>> itemsList)
+	{
+	    parentNode.GetItems (resultRect, ref itemsList);
 
-			if (parentNode.IsLeaf || parentNode.ChildrenItemCount == 0)
-				return;
+	    if (parentNode.IsLeaf || parentNode.ChildrenItemCount == 0)
+		return;
 
             var nodeTopLeft = nodes[parentNode.NodeLevel + 1][parentNode.TopLeftIndex];
             if (nodeTopLeft.looseRect.Overlaps(resultRect))
@@ -76,22 +76,22 @@ namespace RonTang
             if (nodeBottomRight.looseRect.Overlaps(resultRect))
                 GetItems(nodeBottomRight, resultRect, ref itemsList);
 
-        }
+    }
 
-        public bool Insert(GridQuadTreeItem<T> item)
+    public bool Insert(GridQuadTreeItem<T> item)
+	{
+		float maxSide = item.ItemRect.width >= item.ItemRect.height ? item.ItemRect.width : item.ItemRect.height;
+		if (item.ItemRect.height > worldLength || item.ItemRect.width > worldLength) 
 		{
-			float maxSide = item.ItemRect.width >= item.ItemRect.height ? item.ItemRect.width : item.ItemRect.height;
-			if (item.ItemRect.height > worldLength || item.ItemRect.width > worldLength) 
-			{
-				Debug.LogError ("Item rect too big, can not insert it");
-				return false;
-			}
-			int level = Mathf.FloorToInt (Mathf.Log (worldLength / maxSide, 2f));
-			if (level > nodeMaxLevel) 
-			{
-				level = nodeMaxLevel;
-				Debug.LogWarning ("Maybe this item is too small, but we can add it to max level.");
-			}
+			Debug.LogError ("Item rect too big, can not insert it");
+			return false;
+		}
+		int level = Mathf.FloorToInt (Mathf.Log (worldLength / maxSide, 2f));
+		if (level > nodeMaxLevel) 
+		{
+			level = nodeMaxLevel;
+			Debug.LogWarning ("Maybe this item is too small, but we can add it to max level.");
+		}
             Vector2 itemLocalPos = item.Position - worldRect.min;
             int sideNodeCount = (int)Mathf.Pow(2, level);
             float cellLength = worldLength / sideNodeCount;
@@ -125,33 +125,33 @@ namespace RonTang
             }
            
 			return false;
-		}
+	}
 
-        private void ChangeAllParentChildrenItemCount(GridQuadTreeNode<T> node, int deltaVal)
-        {
-            int pIndex = node.ParentIndex;
-            int pLevel = node.NodeLevel - 1;
-            for ( ; pLevel >= 0; pLevel--)
-            {
-                nodes[pLevel][pIndex].ChildrenItemCount += deltaVal;
-                pIndex = nodes[pLevel][pIndex].ParentIndex;
-            }
-        }
+    private void ChangeAllParentChildrenItemCount(GridQuadTreeNode<T> node, int deltaVal)
+    {
+          int pIndex = node.ParentIndex;
+          int pLevel = node.NodeLevel - 1;
+          for ( ; pLevel >= 0; pLevel--)
+          {
+               nodes[pLevel][pIndex].ChildrenItemCount += deltaVal;
+               pIndex = nodes[pLevel][pIndex].ParentIndex;
+          }
+    }
 
-		private void ItemMove(GridQuadTreeItem<T> item, GridQuadTreeNode<T> node)
-		{
+	private void ItemMove(GridQuadTreeItem<T> item, GridQuadTreeNode<T> node)
+	{
             ChangeAllParentChildrenItemCount(node, -1);
             Insert (item);
-		}
+	}
 
 
-		private void Init()
-		{
-			nodeMaxLevel = Mathf.FloorToInt(Mathf.Log(worldLength / objMinLength, 2f) + 1);
-			InitGrid();
-			BulidTree();
-            rootNode = nodes[0][0];
-		}
+	private void Init()
+	{
+		nodeMaxLevel = Mathf.FloorToInt(Mathf.Log(worldLength / objMinLength, 2f) + 1);
+		InitGrid();
+		BulidTree();
+        rootNode = nodes[0][0];
+	}
 
         private void InitGrid()
         {
